@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Baby mine 💕</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        font-family: 'Georgia', serif;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .card {
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        transition: all 0.5s ease;
+    }
+
+    h1 {
+        color: #e91e63;
+        font-size: 26px;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        margin: 10px;
+        transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+        background-color: #ff4081;
+        color: white;
+    }
+
+    #noBtn {
+        background-color: #757575;
+        color: white;
+    }
+
+    #message {
+        font-size: 22px;
+        color: #e91e63;
+        margin-top: 20px;
+        display: none;
+        animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart {
+        position: fixed;
+        bottom: -20px;
+        font-size: 24px;
+        animation: floatUp 6s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-110vh); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1 id="question">
+        Baby mine 💕<br><br>
+        Veux-tu être ma Valentine ?
+    </h1>
+
+    <button id="yesBtn">Oui 💖</button>
+    <button id="noBtn">Non 😢</button>
+
+    <div id="message">
+        Tu viens de faire battre mon cœur encore plus fort… 💓<br><br>
+        Je t’aime Baby mine ❤️
+    </div>
+</div>
+
+<!-- Musique locale -->
+<audio id="music" src="until_i_found_you.mp3"></audio>
+
+<script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const question = document.getElementById("question");
+    const message = document.getElementById("message");
+    const music = document.getElementById("music");
+
+    let scale = 1;
+
+    const questions = [
+        "Baby mine… es-tu vraiment sûre ? 🥺",
+        "Réfléchis encore un peu… tu es certaine ? 💭",
+        "Mon cœur va être triste… vraiment ? 💔",
+        "Et si tu laissais parler ton cœur ? ✨",
+        "Tu ne veux pas reconsidérer ? 💕"
+    ];
+
+    let index = 0;
+
+    noBtn.addEventListener("click", function() {
+        scale += 0.25;
+        yesBtn.style.transform = "scale(" + scale + ")";
+        question.innerHTML = questions[index % questions.length];
+        index++;
+    });
+
+    yesBtn.addEventListener("click", function() {
+        question.style.display = "none";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+        message.style.display = "block";
+
+        music.volume = 0.5;
+        music.play();
+
+        setInterval(createHeart, 300);
+    });
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (20 + Math.random() * 20) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+</script>
+
+</body>
+</html>
